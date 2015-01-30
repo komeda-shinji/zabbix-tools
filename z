@@ -176,7 +176,7 @@ def parse_opt(options):
 	    ret[opt] = list2arr(options,opt)
          else:
             ret[opt] = getattr(options, opt)
-   print ret
+   #print ret
    return ret
 
 def getconfig(confpath):
@@ -197,7 +197,7 @@ def getconfig(confpath):
 
 def select_config():
     if options.config:
-	getconfig(options.config)
+	cfg=getconfig(options.config)
     else:
 	confpath=os.environ['HOME'] + '/.zrc'
 	cfg=getconfig(confpath)
@@ -233,9 +233,12 @@ res = f(dic)
 if options.show:
    showfield=options.show.split(",")
    for unit in res:
-     print ""
-     for key in unit.keys():
-       if key in showfield:
-         print "%s = %s" % (key, unit[key])
+     #print ""
+     if  isinstance(unit, dict):
+       for key in unit.keys():
+         if key in showfield:
+           print "%s = %s" % (key, unit[key])
+     else:
+           print "%s = %s" % (unit, ', '.join(res[unit]))
 else:
    print json.dumps(res,sort_keys=True,indent=2)
