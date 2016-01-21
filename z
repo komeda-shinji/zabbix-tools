@@ -69,6 +69,7 @@ def get_options():
     parser.add_option("", "--only_true", action="store", dest="only_true", help="Triggers in state PROBLEM and recently switched (30 min)")
     parser.add_option("", "--output", action="store", dest="output", help="Output options")
     parser.add_option("", "--parentTemplateids", action="append", dest="parentTemplateids", help="Parent template IDs")
+    parser.add_option("", "--params", action="append", dest="params", help="Request params")
     parser.add_option("", "--pattern", action="store", dest="pattern", help="Return by given item description pattern")
     parser.add_option("", "--preservekeys", action="store", dest="preservekeys", help="Return hash instead of array")
     parser.add_option("", "--proxy_hosts", action="store", dest="proxy_hosts", help="return only Proxies")
@@ -233,6 +234,9 @@ zapi.login(cfg["login"], cfg["password"])
 o = getattr(zapi, args[1])
 f = getattr(o, args[0])
 
+if args[0] == 'delete' and 'params' in dic:
+    # special case
+    dic = dic['params']
 res = f(dic)
 if options.show:
    showfield=options.show.split(",")
