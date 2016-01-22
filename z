@@ -78,26 +78,46 @@ def get_options():
     parser.add_option("", "--scriptids", action="append", dest="scriptids", help="Script IDs")
     parser.add_option("", "--search", action="store", dest="search", help="Return by any given action object field pattern")
     parser.add_option("-w", "--searchWildcardsEnabled", action="store", dest="searchWildcardsEnabled", help="Search pattern in whole field using wildcards")
+    parser.add_option("", "--select_applications", action="store", dest="select_applications", help="Select host applications")
     parser.add_option("", "--selectApplications", action="store", dest="selectApplications", help="Select host applications")
+    parser.add_option("", "--select_conditions", action="store", dest="select_conditions", help="Select action conditions")
     parser.add_option("", "--selectConditions", action="store", dest="selectConditions", help="Select action conditions")
+    parser.add_option("", "--select_dependencies", action="store", dest="select_dependencies", help="Select trigger dependencies")
     parser.add_option("", "--selectDependencies", action="store", dest="selectDependencies", help="Select trigger dependencies")
+    parser.add_option("", "--select_functions", action="store", dest="select_functions", help="Select trigger functions")
     parser.add_option("", "--selectFunctions", action="store", dest="selectFunctions", help="Select trigger functions")
+    parser.add_option("", "--select_graph_items", action="store", dest="select_graph_items", help="Select graph items")
     parser.add_option("", "--selectGraphItems", action="store", dest="selectGraphItems", help="Select graph items")
+    parser.add_option("", "--select_graphs", action="store", dest="select_graphs", help="Select graphs")
     parser.add_option("", "--selectGraphs", action="store", dest="selectGraphs", help="Select graphs")
+    parser.add_option("", "--select_hosts", action="store", dest="select_hosts", help="Select hosts")
     parser.add_option("", "--selectHosts", action="store", dest="selectHosts", help="Select hosts")
+    parser.add_option("", "--select_image", action="store", dest="select_image", help="Select image source")
     parser.add_option("", "--selectImage", action="store", dest="selectImage", help="Select image source")
+    parser.add_option("", "--select_items", action="store", dest="select_items", help="Select items")
     parser.add_option("", "--selectItems", action="store", dest="selectItems", help="Select items")
+    parser.add_option("", "--select_links", action="store", dest="select_links", help="Select map item links")
     parser.add_option("", "--selectLinks", action="store", dest="selectLinks", help="Select map item links")
+    parser.add_option("", "--select_macros", action="store", dest="select_macros", help="Select host macros")
     parser.add_option("", "--selectMacros", action="store", dest="selectMacros", help="Select host macros")
+    parser.add_option("", "--select_medias", action="store", dest="select_medias", help="Select user medias")
     parser.add_option("", "--selectMedias", action="store", dest="selectMedias", help="Select user medias")
+    parser.add_option("", "--select_mediatypes", action="store", dest="select_mediatypes", help="Select mediatypes")
     parser.add_option("", "--selectMediatypes", action="store", dest="selectMediatypes", help="Select mediatypes")
+    parser.add_option("", "--select_operations", action="store", dest="select_operations", help="Select action operations")
     parser.add_option("", "--selectOperations", action="store", dest="selectOperations", help="Select action operations")
     parser.add_option("", "--selectParentTemplates", action="store", dest="selectParentTemplates", help="Select host templates")
+    parser.add_option("", "--select_profile", action="store", dest="select_profile", help="Select host profile")
     parser.add_option("", "--selectProfile", action="store", dest="selectProfile", help="Select host profile")
+    parser.add_option("", "--select_selements", action="store", dest="select_selements", help="Select map items")
     parser.add_option("", "--selectSelements", action="store", dest="selectSelements", help="Select map items")
+    parser.add_option("", "--select_templates", action="store", dest="select_templates", help="Select templates")
     parser.add_option("", "--selectTemplates", action="store", dest="selectTemplates", help="Select templates")
+    parser.add_option("", "--select_triggers", action="store", dest="select_triggers", help="Select host triggers")
     parser.add_option("", "--selectTriggers", action="store", dest="selectTriggers", help="Select host triggers")
+    parser.add_option("", "--select_users", action="store", dest="select_users", help="Select users")
     parser.add_option("", "--selectUsers", action="store", dest="selectUsers", help="Select users")
+    parser.add_option("", "--select_usrgrps", action="store", dest="select_usrgrps", help="Select user groups")
     parser.add_option("", "--selectUsrgrps", action="store", dest="selectUsrgrps", help="Select user groups")
     parser.add_option("", "--skipDependent", action="store", dest="skipDependent", help="Do not select dependent triggers in PROBLEM state")
     parser.add_option("", "--sortfield", action="store", dest="sortfield", help="Sort by Action field")
@@ -152,6 +172,8 @@ def show_help(p):
 def parse_data(options,opt):
     f = {}
     line = getattr(options,opt)
+    #if not isinstance(line, basestring):
+    #    return None
     for op in line.split(options.delimeter):
         o = op.split("=")
         f[o[0]] = o[1]
@@ -200,6 +222,7 @@ def getconfig(confpath):
 
 def select_config():
     if options.config:
+        confpath=options.config
 	cfg=getconfig(options.config)
     else:
 	confpath=os.environ['HOME'] + '/.zrc'
